@@ -11,6 +11,7 @@ type UserService interface {
 	Login(input LoginInput) (User, error)
 	CheckEmail(input CheckEmail) (bool, error)
 	SaveAvatar(id int, fileLocation string) (User, error)
+	GetUserById(id int) (User, error)
 }
 
 type userService struct {
@@ -92,4 +93,16 @@ func (s *userService) SaveAvatar(id int, fileLocation string) (User, error) {
 
 	return userUpdate, nil
 
+}
+
+func (s *userService) GetUserById(id int) (User, error) {
+	user, err := s.repository.FindById(id)
+	if err != nil {
+		return user, err
+	}
+
+	if user.ID == 0 {
+		return user, errors.New("No user found on with that ID")
+	}
+	return user, nil
 }

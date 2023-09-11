@@ -2,6 +2,7 @@ package main
 
 import (
 	"bwastartup/auth"
+	"bwastartup/campaign"
 	"bwastartup/handler"
 	"bwastartup/helper"
 	"bwastartup/user"
@@ -26,10 +27,14 @@ func main() {
 	}
 
 	userRepository := user.NewRepository(db)
+	campaignRepository := campaign.NewCampaignRepository(db)
+
 	userService := user.NewService(userRepository)
+	campaignService := campaign.NewCampaignService(campaignRepository)
 	autService := auth.NewServices()
 
 	userHandler := handler.NewUserHandler(userService, autService)
+	campaignHandler := handler.NewCampaignHandler(campaignService)
 
 	router := gin.Default()
 	api := router.Group("/api/v1")
@@ -39,6 +44,7 @@ func main() {
 	api.POST("/email_checkers", userHandler.CheckEmail)
 	api.POST("/avatars", authMiddleware(autService, userService), userHandler.UploadAvatar)
 
+	api.GET("/campaigns", campaignHandler.GetCampaign)
 	router.Run()
 }
 

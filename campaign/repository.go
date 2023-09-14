@@ -6,6 +6,8 @@ type CampaignRepository interface {
 	FindAll() ([]Campaign, error)
 	FindByUserId(userId int) ([]Campaign, error)
 	FindById(id int) (Campaign, error)
+	Save(campaign Campaign) (Campaign, error)
+	Update(campaign Campaign) (Campaign, error)
 }
 
 type campaignRepository struct {
@@ -19,7 +21,7 @@ func NewCampaignRepository(db *gorm.DB) *campaignRepository {
 func (r *campaignRepository) FindAll() ([]Campaign, error) {
 	var campaigns []Campaign
 
-	err := r.db.Preload("CampaignImages", "campaign_images,is_primary = 1").Find(&campaigns).Error
+	err := r.db.Preload("CampaignImages", "campaign_images.is_primary = 1").Find(&campaigns).Error
 	if err != nil {
 		return campaigns, err
 	}
@@ -30,7 +32,7 @@ func (r *campaignRepository) FindAll() ([]Campaign, error) {
 func (r *campaignRepository) FindByUserId(userId int) ([]Campaign, error) {
 	var campaigns []Campaign
 
-	err := r.db.Where("user_id = ?", userId).Preload("CampaignImages", "campaign_images,is_primary = 1").Find(&campaigns).Error
+	err := r.db.Where("user_id = ?", userId).Preload("CampaignImages", "campaign_images.is_primary = 1").Find(&campaigns).Error
 	if err != nil {
 		return campaigns, err
 	}
@@ -41,6 +43,24 @@ func (r *campaignRepository) FindByUserId(userId int) ([]Campaign, error) {
 func (r *campaignRepository) FindById(id int) (Campaign, error) {
 	var campaign Campaign
 	err := r.db.Where("id = ?", id).Preload("User").Preload("CampaignImages").Find(&campaign).Error
+	if err != nil {
+		return campaign, err
+	}
+
+	return campaign, nil
+}
+
+func (r *campaignRepository) Save(campaign Campaign) (Campaign, error) {
+	err := r.db.Create(&campaign).Error
+	if err != nil {
+		return campaign, err
+	}
+
+	return campaign, nil
+}
+
+func (r *campaignRepository) Update(campaign Campaign) (Campaign, error) {
+	err := r.db.Save(&campaign).Error
 	if err != nil {
 		return campaign, err
 	}

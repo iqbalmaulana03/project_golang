@@ -149,6 +149,98 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create Campaign",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2fQ.BZ1KfmvX8CTOIe0yZRurbR6w4JG8BcgraeoCONuQ-ks",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Campaign Penggalangan Dana\",\r\n    \"short_dercription\" : \"short_dercription\",\r\n    \"description\" : \"description biasa\",\r\n    \"goal_amount\" : 100000000,\r\n    \"perks\" : \"keuntungan ikhlas, kemudian dua, dan tiga\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/campaigns",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"campaigns"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Updated Campaign",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2fQ.BZ1KfmvX8CTOIe0yZRurbR6w4JG8BcgraeoCONuQ-ks",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Campaign Penggalangan Miskin\",\r\n    \"short_dercription\" : \"short_dercription\",\r\n    \"description\" : \"description biasa\",\r\n    \"goal_amount\" : 10000000000000,\r\n    \"perks\" : \"keuntungan ikhlas, kemudian dua, dan tiga\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/campaigns/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"campaigns",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Detail Campaign",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/campaigns/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"campaigns",
+								"3"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
